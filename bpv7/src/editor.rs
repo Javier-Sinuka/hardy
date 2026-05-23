@@ -193,7 +193,9 @@ impl Chunk {
         unchanged.sort_by_key(|(_, range)| range.start);
 
         // Sort new chunks by size descending for best-fit gap filling
-        new_chunks.sort_by(|(_, a), (_, b)| b.len().cmp(&a.len()));
+        // new_chunks.sort_by(|(_, a), (_, b)| b.len().cmp(&a.len()));
+        // Update this line for new Chunk structure for testing
+        new_chunks.sort_by_key(|(_, b)| std::cmp::Reverse(b.len()));
 
         // Build ordered extension list: try to fill gaps with matching-size New chunks
         let mut ordered: Vec<(u64, Chunk)> = Vec::with_capacity(unchanged.len() + new_chunks.len());
